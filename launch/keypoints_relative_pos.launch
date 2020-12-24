@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="keypoints_relative_pos_node" type="keypoints_relative_pos" pkg="keypoints_relative_pos" respawn="false" output="log">
+	</node>
+</launch>
