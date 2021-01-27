@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#define TRANSLATION_SIZE 10
+#define TRANSLATION_SIZE 5
 
 float lWrist, lShoulder, threshold=0.02;
 std_msgs::Bool msg;
