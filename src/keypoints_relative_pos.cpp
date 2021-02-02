@@ -10,6 +10,7 @@ float lWrist, lShoulder, threshold=0.02;
 std_msgs::Bool msg;
 ros::Publisher pub;
 std::vector<float> translations;
+std::vector<float> left_wrist;
 
 void keypoints_relative_pos_callback (const keypoint_3d_matching_msgs::Keypoint3d_list::ConstPtr keypoint_msg){
 	for (auto it = keypoint_msg->keypoints.begin(); it != keypoint_msg->keypoints.end(); ++it){
@@ -21,6 +22,7 @@ void keypoints_relative_pos_callback (const keypoint_3d_matching_msgs::Keypoint3
 		}
 	}
 	if (lWrist != 0 and lShoulder !=0){
+		left_wrist.clear();
 		translations.push_back(lWrist-lShoulder);
 		if (translations.size() > TRANSLATION_SIZE){
 			int neg=0;
@@ -33,8 +35,9 @@ void keypoints_relative_pos_callback (const keypoint_3d_matching_msgs::Keypoint3
 			translations.clear();
 		}
 	}
-	else{
-		msg.data = true;
+	else if (lWrist == 0){
+		left_wrist.push_back(lWrist);
+		msg.data = left_wrist.size() > 10 ? true : false;
 	}
 	pub.publish(msg);
 }
